@@ -1,0 +1,70 @@
+#### HACKBRIGHT LINKS ####
+09/17 morning lecture: https://fellowship.hackbrightacademy.com/materials/serft8/lectures/apis/
+09/17 lab instructions: https://fellowship.hackbrightacademy.com/materials/serft8/exercises/apis/
+Ticketmaster, Getting Started: https://developer.ticketmaster.com/products-and-docs/apis/getting-started/
+Ticketmaster API: https://developer.ticketmaster.com/products-and-docs/apis/discovery-api/v2/
+
+
+
+#### FROM MORNING LECTURE ON 09/17 ####
+>>> payload = {'term': 'wow very long',
+...            'filter': 'very long'}
+
+>>> req = requests.get('https://fakeapi.code/search', params=payload)
+>>> print(req.url)
+https://fakeapi.code/search?term=wow+very+long&filter=very+long
+
+
+
+#### EXAMPLE ####
+>>> import requests
+>>> url_for_me = 'https://app.ticketmaster.com/discovery/v2/events'
+>>> payload = {'keyword': 'concert', 'size': 1}
+>>> req = requests.get(url_for_me, params=payload)
+        # the right-hand side of the assignment = sign is evaluated first, and it evaluates to a Response object
+            # note: params comes from the official documentation for the requests.get method (see resources below for link)
+        # the left-hand side of the assignment = sign is evaluated next, and it is an unused and valid variable name
+        # req is a variable that now points to a specific Response object
+>>> print(req.url)          
+https://app.ticketmaster.com/discovery/v2/events?keyword=concert&size=1
+>>> req
+<Response [401]>
+
+
+
+## BREAKING IT DOWN ##
+req.url --> requests.get(url_for_me, params=payload).url
+        --> req is a Response object because the requests.get method returns a Response object (see link to documentation below)
+        --> now that we have the Response object...
+        --> we use .url to ask for its instance attribute called url
+        (url is defined within the Response Class documentation, see link below)
+
+
+
+## RESOURCES (for example above) ##
+    # Python Request Sessions API: https://docs.python-requests.org/en/latest/api/#request-sessions
+    
+    # Documentation for requests.get method: https://docs.python-requests.org/en/latest/api/#requests.get
+        You can also search for this by using CTRL+F to search for ".get" on the Request Sessions API page (first resource).
+
+    # Response object: https://docs.python-requests.org/en/latest/api/#requests.Response
+        class requests.Response
+            """The Response object, which contains a server’s response to an HTTP request."""
+    
+    # url instance attribute for a Response object: https://docs.python-requests.org/en/latest/api/#requests.Response.url
+        url = None
+            """Final URL location of Response."""
+
+
+
+## the silly example lol ##
+
+>>> my_num = 1  ---> my_num = (  1  )  
+                            =   1
+                    (my_num)
+                    my_num
+                    my_num = 1
+
+>>> my_num      ---> (my_num)
+                        1
+1
