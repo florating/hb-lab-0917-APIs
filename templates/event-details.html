@@ -8,14 +8,14 @@
   <div class="row">
     <div class="col">
       {# TODO: Replace EVENT NAME with the event's name #}
-      <h2>EVENT NAME</h2>
+      <h2>{{ event['name'] }}</h2>
 
       {#
         TODO: Replace THIS PAGE IS FOR FURTHER STUDY with
         event's description
       #}
       <p>
-        THIS PAGE IS FOR FURTHER STUDY.
+        {{ event['description'] }}
       </p>
     </div>
   </div>
@@ -26,14 +26,14 @@
         TODO: Replace EVENT IMAGE URL with actual URL to one of the
         event images
       #}
-      <img src="EVENT IMAGE URL">
+      <img src="{{ image_url }}" class="event-details">
 
       <p>
         {#
           TODO: Replace EVENT TICKETMASTER URL with URL to event's
           Ticketmaster page
         #}
-        <a href="EVENT TICKETMASTER URL" target="_blank">
+        <a href="{{ event['url'] }}" target="_blank">
           Go to Ticketmaster page
         </a>
       </p>
@@ -42,7 +42,7 @@
     <div class="col">
       <h3>Start date</h3>
       {# TODO: Replace EVENT START DATE with event's start date #}
-      <p>EVENT START DATE</p>
+      <p>{{ event['dates']['start']['localDate'] }}</p>
 
       <h3>Venues</h3>
       <ul>
@@ -52,7 +52,9 @@
 
           Each `li` should contain the name of a venue.
         #}
-        <li>PLACEHOLDER</li>
+        {% for venue in venues %}
+        <li>{{ venue['name'] }}</li>
+        {% endfor %}
       </ul>
 
       <h3>Classifications</h3>
@@ -63,9 +65,17 @@
 
           Each `li` should contain the name of the classification's *genre*.
         #}
-        <li>PLACEHOLDER</li>
+        {% for index in event['classifications'][0] %}
+        {% if event['classifications'][0][index]['name'] not in ['', 'Undefined'] and index not in ['primary', 'family'] %}
+        <li>{{ index }} - {{ event['classifications'][0][index]['name'] }} </li>
+        {% endif %}
+        {% endfor %}
       </ul>
     </div>
   </div>
+</div>
+<div id="results-as-json">
+    <h2>Results as JSON</h2>
+    <pre>{{ pformat(event) }}</pre>
 </div>
 {% endblock %}
